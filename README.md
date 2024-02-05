@@ -1,7 +1,7 @@
 # CMPS 2200  Recitation 02
 
-**Name (Team Member 1):**_________________________  
-**Name (Team Member 2):**_________________________
+**Name (Team Member 1):**_Charles Zhang________________________  
+**Name (Team Member 2):**_Yundan Yang________________________
 
 In this recitation, we will investigate recurrences. 
 To complete this recitation, follow the instructions in this document. Some of your answers will go in this file, and others will require you to edit `main.py`.
@@ -38,11 +38,46 @@ where $W(1) = 1$.
 - [ ] 4. (2 point) Now, derive the asymptotic behavior of $W(n)$ using $f(n) = 1$, $f(n) = \log n$ and $f(n) = n$. Then, generate actual values for $W(n)$ for your code and confirm that the trends match your derivations.
 
 **TODO: your answer goes here**
+ 
+ for $f(n) = 1$, $W(n) = aW(n/b)+1$, therefore, it should be $O(\log_b n)$.
+
+ for $f(n) = \log n$, $W(n) = aW(n/b) + \log n$, based of the change of base formula, $W(n) = aW(n/b) + \log n = \log_b n + \log n = (\log n)/(\log b) + \log n  = \log (n/b) + \log n = O(\log n)$.
+
+ for $f(n) = n$, $W(n) = aW(n/b) + n$, therefore, it should be $O(n)$.
+
+testing with a = 1, b = 20, n = 400:
+
+print(work_calc(100, 1, 20, lambda n: 1))  returns 4
+
+print(work_calc(400, 1, 20, lambda n: math.log(n)))  returns 9.987196820661973
+
+print(work_calc(400, 1, 20, lambda n: n)) returns 422 
+
 
 - [ ] 5. (4 points) Now that you have a nice way to empirically generate valuess of $W(n)$, we can look at the relationship between $a$, $b$, and $f(n)$. Suppose that $f(n) = n^c$. What is the asypmptotic behavior of $W(n)$ if $c < \log_b a$? What about $c > \log_b a$? And if they are equal? Modify `test_compare_work` to compare empirical values for different work functions (at several different values of $n$) to justify your answer. 
 
 **TODO: your answer goes here**
 
-- [ ] 6. (3 points) $W(n)$ is meant to represent the running time of some recursive algorithm. Suppose we always had $a$ processors available to us and we wanted to compute the span of the same algorithm. Implement the function `span_calc` to compute the empirical span, where the work of the algorithm is given by $W(n)$. Implement `test_compare_span` to create a new comparison function for comparing span functions. Derive the asymptotic expressions for the span of the recurrences you used in problem 4 above. Confirm that everything matches up as it should. 
+for $c < \log_b a$,  $W(n) = \log_b n + n^{\log_b a} = O(n ^ {\log_b a})$
+
+for $c > \log_b a$,  $W(n) = \log_b n + n^{c} = O(n ^ {c})$
+
+for $c = \log_b a$,  $W(n) = \Theta(n ^ {c} \log n)$
+
+- [ ] 6. (3 points) $W(n)$ is meant to represent the running time of some recursive algorithm. Suppose we always had $a$ processors available to us and we wanted to compute the span of the same algorithm. Implement the function `span_calc` to compute the empirical span, where the work of the algorithm is given by $W(n)$. Implement `test_compare_span` to create a new comparison function for comparing span functions. Derive the asymptotic expressions for the span of the recurrences you used in problem 4 above. Confirm that everything matches up as it should.
+
+for $f(n) = 1, O(1)$
+
+for $f(n) = n, O(n)$
+
+for $f(n) = \log n, O(\log n)$
+
+comparing constant and linear:
+
+[(10, 4, 18), (20, 5, 38), (50, 6, 97), (100, 7, 197), (1000, 10, 1994), (5000, 13, 9995), (10000, 14, 19995)]
+
+comparing constant and logrithm:
+
+[(10, 4, 4.605170185988092), (20, 5, 7.600902459542082), (50, 6, 12.506177237980513), (100, 7, 17.111347423968603), (1000, 10, 36.78583226092475), (5000, 13, 55.94412444836603), (10000, 14, 65.15446482034221)]
 
 **TODO: your answer goes here**
